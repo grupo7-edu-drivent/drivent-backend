@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
 const prisma = new PrismaClient();
+import faker from '@faker-js/faker';
 
 async function main() {
   let event = await prisma.event.findFirst();
@@ -15,8 +16,31 @@ async function main() {
       },
     });
   }
-
+   await prisma.ticketType.createMany({
+    data: [
+      {
+        name: "EventName",
+        price: 250,
+        isRemote: false,
+        includesHotel: false,
+      },
+      {
+        name: "EventName",
+        price: 100,
+        isRemote: true,
+        includesHotel: false,
+      },
+      {
+        name: "EventName",
+        price: 600,
+        isRemote: false,
+        includesHotel: true,
+      },
+    ]
+  });
+  const ticketTypes = await prisma.ticketType.findMany();
   console.log({ event });
+  console.log( ticketTypes );
 }
 
 main()
