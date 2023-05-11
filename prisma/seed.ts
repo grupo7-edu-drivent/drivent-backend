@@ -19,20 +19,20 @@ async function main() {
    await prisma.ticketType.createMany({
     data: [
       {
-        name: faker.name.findName(),
-        price: faker.datatype.number(),
-        isRemote: faker.datatype.boolean(),
-        includesHotel: faker.datatype.boolean(),
+        name: "EventName",
+        price: 250,
+        isRemote: false,
+        includesHotel: false,
       },
       {
-        name: faker.name.findName(),
-        price: faker.datatype.number(),
+        name: "EventName",
+        price: 100,
         isRemote: true,
-        includesHotel: faker.datatype.boolean(),
+        includesHotel: false,
       },
       {
-        name: faker.name.findName(),
-        price: faker.datatype.number(),
+        name: "EventName",
+        price: 600,
         isRemote: false,
         includesHotel: true,
       },
