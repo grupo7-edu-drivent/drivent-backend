@@ -1,3 +1,4 @@
+import { Event } from '@prisma/client';
 import { prisma, redis } from '@/config';
 
 async function findFirst() {
@@ -5,7 +6,7 @@ async function findFirst() {
   const cachedEvent = await redis.get(cacheKey);
 
   if (cachedEvent) {
-    const event = JSON.parse(cachedEvent);
+    const event = JSON.parse(cachedEvent) as Event;
     return event;
   }
 
