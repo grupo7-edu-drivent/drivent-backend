@@ -35,7 +35,7 @@ async function getBooking(userId: number) {
 async function listBookingByRoomId(userId: number, roomId: number) {
   if (!roomId) throw badRequestError();
 
-  // await checkEnrollmentTicket(userId);
+  await checkEnrollmentTicket(userId);
 
   const bookings = await bookingRepository.findByRoomId(roomId);
 
