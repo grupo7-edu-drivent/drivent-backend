@@ -41,22 +41,25 @@ async function main() {
   const ticketTypes = await prisma.ticketType.findMany();
   console.log({ event });
   console.log(ticketTypes);
-  await prisma.hotel.createMany({
-    data: [
-      {
-        name: 'The Oberoi Vanyavilas',
-        image: faker.image.business(),
-      },
-      {
-        name: 'Riad Kniza',
-        image: faker.image.business(),
-      },
-      {
-        name: 'Portrait Firenze',
-        image: faker.image.business(),
-      },
-    ],
-  });
+  let hotel = await prisma.hotel.findFirst();
+  if(!hotel){
+    await prisma.hotel.createMany({
+      data: [
+        {
+          name: 'The Oberoi Vanyavilas',
+          image: faker.image.business(),
+        },
+        {
+          name: 'Riad Kniza',
+          image: faker.image.business(),
+        },
+        {
+          name: 'Portrait Firenze',
+          image: faker.image.business(),
+        },
+      ],
+    });
+  }
   const hotelOberoi = await prisma.hotel.findFirst({
     where: {
       name: 'The Oberoi Vanyavilas',

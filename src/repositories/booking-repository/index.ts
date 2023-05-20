@@ -1,4 +1,4 @@
-import { Booking } from '@prisma/client';
+import { Booking, Hotel } from '@prisma/client';
 import { prisma } from '@/config';
 
 type CreateParams = Omit<Booking, 'id' | 'createdAt' | 'updatedAt'>;
@@ -30,7 +30,11 @@ async function findByUserId(userId: number) {
       userId,
     },
     include: {
-      Room: true,
+      Room: {
+        include: {
+          Hotel: true,
+        },
+      },
     },
   });
 }
