@@ -13,6 +13,17 @@ export async function getTicketTypes(req: AuthenticatedRequest, res: Response, n
   }
 }
 
+export async function getTicketPaidByUserId(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  const { userId } = req;
+
+  try {
+    const ticket = await ticketService.getTicketPaidByUserId(userId);
+    return res.status(httpStatus.OK).send(ticket);
+  } catch (e) {
+    next(e);
+  }
+}
+
 export async function getTickets(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<Response> {
   const { userId } = req;
 

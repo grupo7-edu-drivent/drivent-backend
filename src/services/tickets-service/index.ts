@@ -21,6 +21,16 @@ async function getTicketByUserId(userId: number): Promise<Ticket> {
   return ticket;
 }
 
+async function getTicketPaidByUserId(userId: number): Promise<Ticket> {
+  const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
+  if (!enrollment) throw notFoundError();
+
+  const ticket = await ticketsRepository.getTicketPaidByUserId(userId);
+  if (!ticket) throw notFoundError();
+
+  return ticket;
+}
+
 async function createTicket(userId: number, ticketTypeId: number): Promise<Ticket> {
   const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
   if (!enrollment) throw notFoundError();
@@ -38,6 +48,6 @@ async function createTicket(userId: number, ticketTypeId: number): Promise<Ticke
   return ticket;
 }
 
-const ticketService = { getTicketType, getTicketByUserId, createTicket };
+const ticketService = { getTicketType, getTicketByUserId, getTicketPaidByUserId, createTicket };
 
 export default ticketService;
