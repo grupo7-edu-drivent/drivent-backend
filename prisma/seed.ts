@@ -175,7 +175,7 @@ async function main() {
   }
   const activity = await prisma.activity.findMany({
     include: {
-      ActivityRoom: true;
+      ActivityRoom: true
     }
   })
   console.log({ event });
