@@ -39,8 +39,6 @@ async function main() {
     ],
   });
   const ticketTypes = await prisma.ticketType.findMany();
-  console.log({ event });
-  console.log(ticketTypes);
   let hotel = await prisma.hotel.findFirst();
   if(!hotel){
     await prisma.hotel.createMany({
@@ -131,6 +129,58 @@ async function main() {
       ],
     });
   }
+  let activityRoom = await prisma.activityRoom.findFirst({});
+  if(!activityRoom){
+    await prisma.activityRoom.createMany({
+      data: [
+        {
+          title: 'Auditório Principal'
+        },
+        {
+          title: 'Auditório Lateral'
+        },
+        {
+          title: 'Sala de Workshop'
+        },
+        {
+          title: 'Online'
+        }
+      ]
+    });
+    await prisma.activity.createMany({
+      data: [
+        {
+          title: 'Minecraft: montando o pc Ideal',
+          capacity: 27,
+          startDate: dayjs(Number(event.startsAt.getTime()) + 	90000000 ).toDate(),
+          endDate: dayjs(Number(event.startsAt.getTime()) + 93600000 ).toDate(),
+          activityRoomId: 1,
+        },
+        {
+          title: 'Palestra x',
+          capacity: 27,
+          startDate: dayjs(Number(event.startsAt.getTime()) + 	97200000 ).toDate(),
+          endDate: dayjs(Number(event.startsAt.getTime()) + 100800000 ).toDate(),
+          activityRoomId: 2
+        },
+        {
+          title: 'Palestra y',
+          capacity: 27,
+          startDate: dayjs(Number(event.startsAt.getTime()) + 	104400000 ).toDate(),
+          endDate: dayjs(Number(event.startsAt.getTime()) + 108000000 ).toDate(),
+          activityRoomId: 3,
+        }
+      ]
+    });
+  }
+  const activity = await prisma.activity.findMany({
+    include: {
+      ActivityRoom: true;
+    }
+  })
+  console.log({ event });
+  console.log(ticketTypes);
+  console.log(activity);
 }
 
 main()
